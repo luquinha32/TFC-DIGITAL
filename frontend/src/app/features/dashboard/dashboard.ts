@@ -115,11 +115,10 @@ export class DashboardComponent {
       .join('');
   }
 
-  abrirSecao(nome: string, event?: Event): void {
-    event?.preventDefault();
-    this.secao = nome;
-    this.mensagem = '';
-  }
+  abrirSecao(nome: string): void {
+  this.secao = nome;
+  this.mensagem = '';
+}
 
   sair(event?: Event): void {
     event?.preventDefault();

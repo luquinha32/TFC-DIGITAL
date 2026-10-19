@@ -1,7 +1,7 @@
-
 <div class="app-container">
 
   <aside class="sidebar">
+
     <div class="logo">
       <div class="logo-icon"></div>
     </div>
@@ -9,361 +9,649 @@
     <p class="menu-label">MENU</p>
 
     <nav>
-      <a href="#" class="menu-item"
-         [class.active]="secao === 'visao-geral'"
-         (click)="abrirSecao('visao-geral', $event)">
-        <span>⌂</span> Visão geral
-      </a>
 
-      <a href="#" class="menu-item"
-         [class.active]="secao === 'entregar'"
-         (click)="abrirSecao('entregar', $event)">
-        <span>⇧</span> Entregar trabalho
-      </a>
+      <button
+        type="button"
+        class="menu-item"
+        [class.active]="secao === 'visao-geral'"
+        (click)="abrirSecao('visao-geral')">
+        <span>⌂</span>
+        Visão geral
+      </button>
 
-      <a href="#" class="menu-item"
-         [class.active]="secao === 'arquivos'"
-         (click)="abrirSecao('arquivos', $event)">
-        <span>▱</span> Meus arquivos
-      </a>
+      <button
+        type="button"
+        class="menu-item"
+        [class.active]="secao === 'entregar'"
+        (click)="abrirSecao('entregar')">
+        <span>⇧</span>
+        Entregar trabalho
+      </button>
+
+      <button
+        type="button"
+        class="menu-item"
+        [class.active]="secao === 'arquivos'"
+        (click)="abrirSecao('arquivos')">
+        <span>▱</span>
+        Meus arquivos
+      </button>
+
     </nav>
 
     <p class="menu-label account-label">CONTA</p>
 
     <nav>
-      <a href="#" class="menu-item"
-         [class.active]="secao === 'configuracoes'"
-         (click)="abrirSecao('configuracoes', $event)">
-        <span>⚙</span> Configurações
-      </a>
 
-      <a href="#" class="menu-item"
-         [class.active]="secao === 'perfil'"
-         (click)="abrirSecao('perfil', $event)">
-        <span>♙</span> Meu perfil
-      </a>
+      <button
+        type="button"
+        class="menu-item"
+        [class.active]="secao === 'configuracoes'"
+        (click)="abrirSecao('configuracoes')">
+        <span>⚙</span>
+        Configurações
+      </button>
 
-      <a href="#" class="menu-item" (click)="sair($event)">
-        <span>⇥</span> Sair
-      </a>
+      <button
+        type="button"
+        class="menu-item"
+        [class.active]="secao === 'perfil'"
+        (click)="abrirSecao('perfil')">
+        <span>♙</span>
+        Meu perfil
+      </button>
+
+      <button
+        type="button"
+        class="menu-item"
+        (click)="sair()">
+        <span>⇥</span>
+        Sair
+      </button>
+
     </nav>
 
     <div class="help-card">
       <span class="help-icon">▣</span>
+
       <h3>Central de ajuda</h3>
-      <p>Encontre respostas ou tire dúvidas com a secretaria.</p>
+
+      <p>
+        Encontre respostas ou tire dúvidas com a secretaria.
+      </p>
+
       <a href="mailto:suporte@tfcdigital.edu.br">
         Acessar central →
       </a>
     </div>
+
   </aside>
 
   <main class="main-content">
 
     <header class="topbar">
-      <button class="notification" type="button"
-              (click)="mensagem = 'Você está em dia com as notificações.'"
-              aria-label="Notificações">♧</button>
 
-      <button class="profile profile-button" type="button"
-              (click)="abrirSecao('perfil')"
-              aria-label="Abrir meu perfil">
-        <div class="avatar">{{ iniciais }}</div>
+      <button
+        class="notification"
+        type="button"
+        (click)="mensagem = 'Você está em dia com as notificações.'">
+        ♧
+      </button>
+
+      <button
+        class="profile profile-button"
+        type="button"
+        (click)="abrirSecao('perfil')">
+
+        <div class="avatar">
+          {{ iniciais }}
+        </div>
+
         <div class="profile-info">
           <strong>{{ aluno }}</strong>
           <small>{{ curso }}</small>
         </div>
+
         <span>›</span>
+
       </button>
+
     </header>
 
     <!-- VISÃO GERAL -->
-    <section class="dashboard" *ngIf="secao === 'visao-geral'">
+
+    <section
+      class="dashboard"
+      *ngIf="secao === 'visao-geral'">
 
       <div class="welcome-row">
+
         <div>
-          <span class="eyebrow">SEMESTRE 2026.2</span>
-          <h1>Olá, {{ aluno }}!</h1>
-          <p>Acompanhe o progresso do seu trabalho de conclusão.</p>
+
+          <span class="eyebrow">
+            SEMESTRE 2026.2
+          </span>
+
+          <h1>
+            Olá, {{ aluno }}!
+          </h1>
+
+          <p>
+            Acompanhe o progresso do seu trabalho de conclusão.
+          </p>
+
         </div>
 
         <div class="deadline-badge">
           ◷ &nbsp; Prazo final &nbsp; | &nbsp;
           <strong>28 jun. 23:59</strong>
         </div>
+
       </div>
 
       <div class="top-grid">
+
         <section class="card project-card">
+
           <div class="card-top">
-            <span class="eyebrow">SEU TRABALHO</span>
-            <span class="status">● Em desenvolvimento</span>
+
+            <span class="eyebrow">
+              SEU TRABALHO
+            </span>
+
+            <span class="status">
+              ● Em desenvolvimento
+            </span>
+
           </div>
 
           <div class="project-info">
+
             <div class="project-text">
-              <span class="eyebrow">TCC II • {{ area }}</span>
-              <h2>{{ tituloTcc }}</h2>
+
+              <span class="eyebrow">
+                TCC II • {{ area }}
+              </span>
+
+              <h2>
+                {{ tituloTcc }}
+              </h2>
 
               <div class="advisor">
-                <div class="avatar">AL</div>
-                <div>
-                  <small>Orientador</small>
-                  <strong>{{ orientador }}</strong>
+
+                <div class="avatar">
+                  AL
                 </div>
+
+                <div>
+
+                  <small>Orientador</small>
+
+                  <strong>
+                    {{ orientador }}
+                  </strong>
+
+                </div>
+
               </div>
+
             </div>
 
-            <div class="progress-circle"
-                 [style.--progress]="progresso + '%'">
+            <div
+              class="progress-circle"
+              [style.--progress]="progresso + '%'">
+
               <div>
-                <strong>{{ progresso }}%</strong>
-                <small>concluído</small>
+
+                <strong>
+                  {{ progresso }}%
+                </strong>
+
+                <small>
+                  concluído
+                </small>
+
               </div>
+
             </div>
+
           </div>
 
           <div class="project-stages">
+
             <div class="stages-header">
-              <span>Progresso das etapas</span>
-              <strong>{{ etapasConcluidas }} de {{ etapas.length }} concluídas</strong>
+
+              <span>
+                Progresso das etapas
+              </span>
+
+              <strong>
+                {{ etapasConcluidas }} de
+                {{ etapas.length }} concluídas
+              </strong>
+
             </div>
 
             <div class="progress-bar">
-              <div [style.width]="progresso + '%'"></div>
+
+              <div
+                [style.width]="progresso + '%'">
+              </div>
+
             </div>
 
             <div class="stages">
-              <div *ngFor="let etapa of etapas; let i = index"
-                   class="stage"
-                   [class.completed]="i < etapasConcluidas"
-                   [class.current]="i === etapasConcluidas">
+
+              <div
+                *ngFor="let etapa of etapas; let i = index"
+                class="stage"
+                [class.completed]="i < etapasConcluidas"
+                [class.current]="i === etapasConcluidas">
+
                 <span class="stage-icon">
                   {{ i < etapasConcluidas ? '✓' : i + 1 }}
                 </span>
-                <small>{{ etapa }}</small>
+
+                <small>
+                  {{ etapa }}
+                </small>
+
               </div>
+
             </div>
+
           </div>
+
         </section>
 
         <section class="card delivery-card">
+
           <div class="calendar-icon">
-            <span>JUN</span>
-            <strong>28</strong>
+
+            <span>
+              JUN
+            </span>
+
+            <strong>
+              28
+            </strong>
+
           </div>
 
-          <span class="eyebrow delivery-label">PRÓXIMA ENTREGA</span>
-          <h2>Versão final do TCC</h2>
-          <p class="file-note">PDF • Máximo 30 MB</p>
+          <span class="eyebrow delivery-label">
+            PRÓXIMA ENTREGA
+          </span>
+
+          <h2>
+            Versão final do TCC
+          </h2>
+
+          <p class="file-note">
+            PDF • Máximo 30 MB
+          </p>
 
           <div class="countdown">
-            <div><strong>18</strong><small>dias</small></div>
+
+            <div>
+              <strong>18</strong>
+              <small>dias</small>
+            </div>
+
             <span>:</span>
-            <div><strong>09</strong><small>horas</small></div>
+
+            <div>
+              <strong>09</strong>
+              <small>horas</small>
+            </div>
+
             <span>:</span>
-            <div><strong>42</strong><small>min</small></div>
+
+            <div>
+              <strong>42</strong>
+              <small>min</small>
+            </div>
+
           </div>
 
-          <button type="button" class="primary-button"
-                  (click)="entregarTrabalho()">
-            Entregar trabalho <span>→</span>
+          <button
+            type="button"
+            class="primary-button"
+            (click)="entregarTrabalho()">
+
+            Entregar trabalho
+            <span>→</span>
+
           </button>
+
         </section>
+
       </div>
 
-      <div class="bottom-grid">
-        <section class="card activities-card">
-          <div class="section-heading">
-            <div>
-              <h2>Últimas atividades</h2>
-              <p>Atualizações recentes do seu trabalho</p>
-            </div>
-            <a href="#" (click)="verTodasAtividades($event)">Ver todas</a>
-          </div>
-
-          <div class="activity" *ngFor="let atividade of atividades">
-            <div class="activity-icon">{{ atividade.icone }}</div>
-            <div class="activity-info">
-              <strong>{{ atividade.titulo }}</strong>
-              <p>{{ atividade.descricao }}</p>
-            </div>
-            <small>{{ atividade.data }}</small>
-          </div>
-        </section>
-
-        <section class="card files-card">
-          <div class="section-heading">
-            <div>
-              <h2>Arquivos recentes</h2>
-              <p>Documentos do seu projeto</p>
-            </div>
-            <a href="#" (click)="verArquivos($event)">Ver todos</a>
-          </div>
-
-          <div class="file-row" *ngFor="let arquivo of arquivos.slice(0, 3)">
-            <div class="file-icon">{{ arquivo.tipo }}</div>
-            <div class="file-info">
-              <strong>{{ arquivo.nome }}</strong>
-              <small>{{ arquivo.detalhes }}</small>
-            </div>
-            <button type="button" class="download-button"
-                    (click)="baixarArquivo(arquivo)"
-                    aria-label="Baixar arquivo">↓</button>
-          </div>
-        </section>
-      </div>
     </section>
 
     <!-- ENTREGA -->
-    <section class="dashboard" *ngIf="secao === 'entregar'">
-      <span class="eyebrow">ENVIO DE DOCUMENTOS</span>
-      <h1>Entregar trabalho</h1>
-      <p>Selecione a versão final do seu TCC em PDF.</p>
+
+    <section
+      class="dashboard"
+      *ngIf="secao === 'entregar'">
+
+      <span class="eyebrow">
+        ENVIO DE DOCUMENTOS
+      </span>
+
+      <h1>
+        Entregar trabalho
+      </h1>
+
+      <p>
+        Selecione a versão final do seu TCC em PDF.
+      </p>
 
       <section class="card form-card">
+
         <form (ngSubmit)="enviarTrabalho()">
+
           <div class="field">
-            <label for="arquivoTcc">Arquivo PDF (máximo 30 MB)</label>
-            <input id="arquivoTcc" type="file"
-                   accept=".pdf,application/pdf"
-                   (change)="selecionarArquivo($event)">
+
+            <label for="arquivoTcc">
+              Arquivo PDF (máximo 30 MB)
+            </label>
+
+            <input
+              id="arquivoTcc"
+              type="file"
+              accept=".pdf,application/pdf"
+              (change)="selecionarArquivo($event)">
+
           </div>
 
           <p *ngIf="arquivoSelecionado">
-            Selecionado: {{ arquivoSelecionado.name }}
+
+            Selecionado:
+            {{ arquivoSelecionado.name }}
+
           </p>
 
-          <p class="form-message" *ngIf="mensagem">{{ mensagem }}</p>
+          <p
+            class="form-message"
+            *ngIf="mensagem">
 
-          <button type="submit" class="primary-button"
-                  [disabled]="!arquivoSelecionado">
+            {{ mensagem }}
+
+          </p>
+
+          <button
+            type="submit"
+            class="primary-button"
+            [disabled]="!arquivoSelecionado">
+
             Confirmar entrega →
+
           </button>
+
         </form>
+
       </section>
+
     </section>
 
     <!-- ARQUIVOS -->
-    <section class="dashboard" *ngIf="secao === 'arquivos'">
-      <span class="eyebrow">DOCUMENTOS</span>
-      <h1>Meus arquivos</h1>
-      <p>Consulte os documentos listados no seu projeto.</p>
+
+    <section
+      class="dashboard"
+      *ngIf="secao === 'arquivos'">
+
+      <span class="eyebrow">
+        DOCUMENTOS
+      </span>
+
+      <h1>
+        Meus arquivos
+      </h1>
+
+      <p>
+        Consulte os documentos listados no seu projeto.
+      </p>
 
       <section class="card files-card">
-        <div class="file-row" *ngFor="let arquivo of arquivos">
-          <div class="file-icon">{{ arquivo.tipo }}</div>
-          <div class="file-info">
-            <strong>{{ arquivo.nome }}</strong>
-            <small>{{ arquivo.detalhes }}</small>
+
+        <div
+          class="file-row"
+          *ngFor="let arquivo of arquivos">
+
+          <div class="file-icon">
+            {{ arquivo.tipo }}
           </div>
-          <button type="button" class="download-button"
-                  (click)="baixarArquivo(arquivo)">↓</button>
+
+          <div class="file-info">
+
+            <strong>
+              {{ arquivo.nome }}
+            </strong>
+
+            <small>
+              {{ arquivo.detalhes }}
+            </small>
+
+          </div>
+
+          <button
+            type="button"
+            class="download-button"
+            (click)="baixarArquivo(arquivo)">
+
+            ↓
+
+          </button>
+
         </div>
 
-        <p *ngIf="arquivos.length === 0">Nenhum arquivo cadastrado.</p>
+        <p *ngIf="arquivos.length === 0">
+          Nenhum arquivo cadastrado.
+        </p>
+
       </section>
+
     </section>
 
     <!-- PERFIL -->
-    <section class="dashboard" *ngIf="secao === 'perfil'">
-      <span class="eyebrow">MINHA CONTA</span>
-      <h1>Meu perfil</h1>
-      <p>Atualize seus dados pessoais e acadêmicos.</p>
+
+    <section
+      class="dashboard"
+      *ngIf="secao === 'perfil'">
+
+      <span class="eyebrow">
+        MINHA CONTA
+      </span>
+
+      <h1>
+        Meu perfil
+      </h1>
+
+      <p>
+        Atualize seus dados pessoais e acadêmicos.
+      </p>
 
       <section class="card profile-card">
+
         <div class="profile-header">
-          <div class="avatar profile-avatar">{{ iniciais }}</div>
-          <div>
-            <h2>{{ aluno }}</h2>
-            <p>{{ curso }}</p>
-            <span class="status">Perfil de aluno</span>
+
+          <div class="avatar profile-avatar">
+            {{ iniciais }}
           </div>
+
+          <div>
+
+            <h2>
+              {{ aluno }}
+            </h2>
+
+            <p>
+              {{ curso }}
+            </p>
+
+            <span class="status">
+              Perfil de aluno
+            </span>
+
+          </div>
+
         </div>
 
         <form (ngSubmit)="salvarPerfil()">
+
           <div class="field">
-            <label for="perfilNome">Nome completo</label>
-            <input id="perfilNome" name="perfilNome"
-                   [(ngModel)]="aluno" required>
+
+            <label for="perfilNome">
+              Nome completo
+            </label>
+
+            <input
+              id="perfilNome"
+              name="perfilNome"
+              [(ngModel)]="aluno"
+              required>
+
           </div>
 
           <div class="field">
-            <label for="perfilEmail">E-mail</label>
-            <input id="perfilEmail" name="perfilEmail"
-                   type="email" [(ngModel)]="email" required>
+
+            <label for="perfilEmail">
+              E-mail
+            </label>
+
+            <input
+              id="perfilEmail"
+              name="perfilEmail"
+              type="email"
+              [(ngModel)]="email"
+              required>
+
           </div>
 
           <div class="field">
-            <label for="perfilCurso">Curso</label>
-            <input id="perfilCurso" name="perfilCurso"
-                   [(ngModel)]="curso" required>
+
+            <label for="perfilCurso">
+              Curso
+            </label>
+
+            <input
+              id="perfilCurso"
+              name="perfilCurso"
+              [(ngModel)]="curso"
+              required>
+
           </div>
 
-          <p class="form-message" *ngIf="mensagem">{{ mensagem }}</p>
+          <p
+            class="form-message"
+            *ngIf="mensagem">
 
-          <button type="submit" class="primary-button">
+            {{ mensagem }}
+
+          </p>
+
+          <button
+            type="submit"
+            class="primary-button">
+
             Salvar perfil
+
           </button>
+
         </form>
+
       </section>
+
     </section>
 
     <!-- CONFIGURAÇÕES -->
-    <section class="dashboard" *ngIf="secao === 'configuracoes'">
-      <span class="eyebrow">PREFERÊNCIAS</span>
-      <h1>Configurações</h1>
-      <p>Gerencie os dados apresentados no seu perfil.</p>
+
+    <section
+      class="dashboard"
+      *ngIf="secao === 'configuracoes'">
+
+      <span class="eyebrow">
+        PREFERÊNCIAS
+      </span>
+
+      <h1>
+        Configurações
+      </h1>
+
+      <p>
+        Gerencie os dados apresentados no seu perfil.
+      </p>
 
       <section class="card form-card">
+
         <form (ngSubmit)="salvarConfiguracoes()">
+
           <div class="field">
-            <label for="configNome">Nome</label>
-            <input id="configNome" name="configNome"
-                   [(ngModel)]="aluno" required>
+
+            <label for="configNome">
+              Nome
+            </label>
+
+            <input
+              id="configNome"
+              name="configNome"
+              [(ngModel)]="aluno"
+              required>
+
           </div>
 
           <div class="field">
-            <label for="configEmail">E-mail</label>
-            <input id="configEmail" name="configEmail"
-                   type="email" [(ngModel)]="email" required>
+
+            <label for="configEmail">
+              E-mail
+            </label>
+
+            <input
+              id="configEmail"
+              name="configEmail"
+              type="email"
+              [(ngModel)]="email"
+              required>
+
           </div>
 
           <div class="field">
-            <label for="configCurso">Curso</label>
-            <input id="configCurso" name="configCurso"
-                   [(ngModel)]="curso" required>
+
+            <label for="configCurso">
+              Curso
+            </label>
+
+            <input
+              id="configCurso"
+              name="configCurso"
+              [(ngModel)]="curso"
+              required>
+
           </div>
 
-          <p class="form-message" *ngIf="mensagem">{{ mensagem }}</p>
+          <p
+            class="form-message"
+            *ngIf="mensagem">
 
-          <button type="submit" class="primary-button">
+            {{ mensagem }}
+
+          </p>
+
+          <button
+            type="submit"
+            class="primary-button">
+
             Salvar configurações
+
           </button>
+
         </form>
+
       </section>
+
     </section>
-
-    <!-- TODAS AS ATIVIDADES -->
-    <section class="dashboard" *ngIf="secao === 'atividades'">
-      <span class="eyebrow">HISTÓRICO</span>
-      <h1>Todas as atividades</h1>
-
-      <section class="card activities-card">
-        <div class="activity" *ngFor="let atividade of atividades">
-          <div class="activity-icon">{{ atividade.icone }}</div>
-          <div class="activity-info">
-            <strong>{{ atividade.titulo }}</strong>
-            <p>{{ atividade.descricao }}</p>
-          </div>
-          <small>{{ atividade.data }}</small>
-        </div>
-      </section>
-    </section>
-
-    <p class="global-message" *ngIf="mensagem && secao === 'visao-geral'">
-      {{ mensagem }}
-    </p>
 
   </main>
+
 </div>

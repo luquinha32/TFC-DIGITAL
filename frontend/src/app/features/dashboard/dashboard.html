@@ -1,657 +1,447 @@
-<div class="app-container">
 
-  <aside class="sidebar">
+<div class="app-shell">
 
-    <div class="logo">
-      <div class="logo-icon"></div>
-    </div>
+  <header class="main-header">
 
-    <p class="menu-label">MENU</p>
+    <a class="brand" href="#" (click)="$event.preventDefault(); abrirSecao('visao-geral')">
+      <span class="brand-mark"><span>T</span></span>
+      <span class="brand-name">TFC <b>DIGITAL</b></span>
+    </a>
 
-    <nav>
+    <nav class="main-nav" aria-label="Navegação principal">
 
-      <button
-        type="button"
-        class="menu-item"
-        [class.active]="secao === 'visao-geral'"
+      <button type="button" class="nav-link" [class.active]="secao === 'visao-geral'"
         (click)="abrirSecao('visao-geral')">
-        <span>⌂</span>
-        Visão geral
+        <span class="nav-icon">⌂</span> Início
       </button>
 
-      <button
-        type="button"
-        class="menu-item"
-        [class.active]="secao === 'entregar'"
+      <button type="button" class="nav-link" [class.active]="secao === 'entregar'"
         (click)="abrirSecao('entregar')">
-        <span>⇧</span>
-        Entregar trabalho
+        <span class="nav-icon">▤</span> Meu trabalho
       </button>
 
-      <button
-        type="button"
-        class="menu-item"
-        [class.active]="secao === 'arquivos'"
+      <button type="button" class="nav-link" [class.active]="secao === 'arquivos'"
         (click)="abrirSecao('arquivos')">
-        <span>▱</span>
-        Meus arquivos
+        <span class="nav-icon">▱</span> Meus arquivos
       </button>
 
-    </nav>
-
-    <p class="menu-label account-label">CONTA</p>
-
-    <nav>
-
-      <button
-        type="button"
-        class="menu-item"
-        [class.active]="secao === 'configuracoes'"
+      <button type="button" class="nav-link" [class.active]="secao === 'configuracoes'"
         (click)="abrirSecao('configuracoes')">
-        <span>⚙</span>
-        Configurações
-      </button>
-
-      <button
-        type="button"
-        class="menu-item"
-        [class.active]="secao === 'perfil'"
-        (click)="abrirSecao('perfil')">
-        <span>♙</span>
-        Meu perfil
-      </button>
-
-      <button
-        type="button"
-        class="menu-item"
-        (click)="sair()">
-        <span>⇥</span>
-        Sair
+        <span class="nav-icon">⚙</span> Configurações
       </button>
 
     </nav>
 
-    <div class="help-card">
-      <span class="help-icon">▣</span>
+    <div class="header-actions">
 
-      <h3>Central de ajuda</h3>
-
-      <p>
-        Encontre respostas ou tire dúvidas com a secretaria.
-      </p>
-
-      <a href="mailto:suporte@tfcdigital.edu.br">
-        Acessar central →
+      <a class="help-link" href="mailto:suporte@tfcdigital.edu.br" aria-label="Central de ajuda">
+        ? <span>Ajuda</span>
       </a>
-    </div>
 
-  </aside>
-
-  <main class="main-content">
-
-    <header class="topbar">
-
-      <button
-        class="notification"
-        type="button"
+      <button class="notification-button" type="button"
+        aria-label="Notificações"
         (click)="mensagem = 'Você está em dia com as notificações.'">
-        ♧
+        ♧<span class="notification-dot"></span>
       </button>
 
-      <button
-        class="profile profile-button"
-        type="button"
-        (click)="abrirSecao('perfil')">
-
-        <div class="avatar">
-          {{ iniciais }}
-        </div>
-
-        <div class="profile-info">
-          <strong>{{ aluno }}</strong>
-          <small>{{ curso }}</small>
-        </div>
-
-        <span>›</span>
-
+      <button class="header-profile" type="button" (click)="abrirSecao('perfil')">
+        <span class="avatar">{{ iniciais }}</span>
+        <span class="header-profile-text">
+          <strong>{{ aluno.nome }}</strong>
+          <small>Área do aluno</small>
+        </span>
+        <span class="chevron">⌄</span>
       </button>
 
-    </header>
+    </div>
+  </header>
+
+  <main class="page-content">
+
+    <div class="global-message" *ngIf="mensagem && secao === 'visao-geral'">
+      {{ mensagem }}
+    </div>
 
     <!-- VISÃO GERAL -->
-
-    <section
-      class="dashboard"
-      *ngIf="secao === 'visao-geral'">
+    <section *ngIf="secao === 'visao-geral'" class="dashboard">
 
       <div class="welcome-row">
-
         <div>
-
-          <span class="eyebrow">
-            SEMESTRE 2026.2
-          </span>
-
-          <h1>
-            Olá, {{ aluno }}!
-          </h1>
-
-          <p>
-            Acompanhe o progresso do seu trabalho de conclusão.
-          </p>
-
+          <span class="eyebrow">SEU ESPAÇO ACADÊMICO · SEMESTRE 2026.2</span>
+          <h1>Olá, {{ aluno.nome }}! <span class="wave">✦</span></h1>
+          <p>Que bom ter você por aqui. Continue avançando no seu TCC!</p>
         </div>
 
         <div class="deadline-badge">
-          ◷ &nbsp; Prazo final &nbsp; | &nbsp;
-          <strong>28 jun. 23:59</strong>
+          <span class="deadline-icon">◷</span>
+          <span>Prazo final<strong>28 jun. · 23:59</strong></span>
         </div>
-
       </div>
 
-      <div class="top-grid">
+      <div class="dashboard-grid">
 
         <section class="card project-card">
 
-          <div class="card-top">
-
-            <span class="eyebrow">
-              SEU TRABALHO
-            </span>
-
-            <span class="status">
-              ● Em desenvolvimento
-            </span>
-
+          <div class="card-heading">
+            <div>
+              <span class="eyebrow">ACOMPANHAMENTO</span>
+              <h2>Meu trabalho</h2>
+            </div>
+            <span class="status"><i></i> Em desenvolvimento</span>
           </div>
 
-          <div class="project-info">
+          <div class="project-main">
 
-            <div class="project-text">
+            <div class="project-copy">
+              <span class="project-tag">TCC II <span>•</span> {{ area }}</span>
 
-              <span class="eyebrow">
-                TCC II • {{ area }}
-              </span>
-
-              <h2>
-                {{ tituloTcc }}
-              </h2>
+              <h3>{{ tituloTcc }}</h3>
 
               <div class="advisor">
-
-                <div class="avatar">
-                  AL
-                </div>
-
-                <div>
-
+                <span class="advisor-avatar">AL</span>
+                <span>
                   <small>Orientador</small>
-
-                  <strong>
-                    {{ orientador }}
-                  </strong>
-
-                </div>
-
+                  <strong>{{ orientador }}</strong>
+                </span>
               </div>
-
             </div>
 
-            <div
-              class="progress-circle"
-              [style.--progress]="progresso + '%'">
-
+            <div class="progress-ring" [style.--progress]="progresso + '%'">
               <div>
-
-                <strong>
-                  {{ progresso }}%
-                </strong>
-
-                <small>
-                  concluído
-                </small>
-
+                <strong>{{ progresso }}<small>%</small></strong>
+                <span>concluído</span>
               </div>
-
             </div>
 
           </div>
 
-          <div class="project-stages">
+          <div class="stages-area">
 
-            <div class="stages-header">
-
-              <span>
-                Progresso das etapas
-              </span>
-
-              <strong>
-                {{ etapasConcluidas }} de
-                {{ etapas.length }} concluídas
-              </strong>
-
+            <div class="stages-heading">
+              <strong>Progresso das etapas</strong>
+              <span>{{ etapasConcluidas }} de {{ etapas.length }} concluídas</span>
             </div>
 
-            <div class="progress-bar">
-
-              <div
-                [style.width]="progresso + '%'">
-              </div>
-
+            <div class="progress-track">
+              <span [style.width]="progresso + '%'"></span>
             </div>
 
-            <div class="stages">
+            <div class="stage-list">
 
-              <div
-                *ngFor="let etapa of etapas; let i = index"
-                class="stage"
+              <div class="stage" *ngFor="let etapa of etapas; let i = index"
                 [class.completed]="i < etapasConcluidas"
                 [class.current]="i === etapasConcluidas">
 
-                <span class="stage-icon">
+                <span class="stage-mark">
                   {{ i < etapasConcluidas ? '✓' : i + 1 }}
                 </span>
 
-                <small>
-                  {{ etapa }}
-                </small>
+                <small>{{ etapa.nome }}</small>
 
               </div>
 
             </div>
-
           </div>
 
-        </section>
-
-        <section class="card delivery-card">
-
-          <div class="calendar-icon">
-
-            <span>
-              JUN
-            </span>
-
-            <strong>
-              28
-            </strong>
-
-          </div>
-
-          <span class="eyebrow delivery-label">
-            PRÓXIMA ENTREGA
-          </span>
-
-          <h2>
-            Versão final do TCC
-          </h2>
-
-          <p class="file-note">
-            PDF • Máximo 30 MB
-          </p>
-
-          <div class="countdown">
-
-            <div>
-              <strong>18</strong>
-              <small>dias</small>
-            </div>
-
-            <span>:</span>
-
-            <div>
-              <strong>09</strong>
-              <small>horas</small>
-            </div>
-
-            <span>:</span>
-
-            <div>
-              <strong>42</strong>
-              <small>min</small>
-            </div>
-
-          </div>
-
-          <button
-            type="button"
-            class="primary-button"
-            (click)="entregarTrabalho()">
-
-            Entregar trabalho
-            <span>→</span>
-
+          <button type="button" class="text-action"
+            (click)="abrirSecao('entregar')">
+            Acompanhar meu trabalho <span>→</span>
           </button>
 
         </section>
 
+        <aside class="side-column">
+
+          <section class="card delivery-card">
+
+            <div class="delivery-top">
+              <span class="calendar-symbol">▦</span>
+              <span class="status status-soft">Próxima entrega</span>
+            </div>
+
+            <p class="eyebrow">DATA LIMITE · 28 JUNHO</p>
+            <h2>Versão final do TCC</h2>
+
+            <p class="muted">
+              Prepare seu documento em PDF para enviar à avaliação.
+            </p>
+
+            <div class="deadline-line">
+              <span><b>28</b><small>JUN</small></span>
+              <span class="deadline-description">
+                Entrega da versão final
+                <strong>Até 23:59</strong>
+              </span>
+            </div>
+
+            <button type="button" class="primary-button full-button"
+              (click)="abrirSecao('entregar')">
+              Entregar trabalho <span>→</span>
+            </button>
+
+          </section>
+
+          <section class="card quick-card">
+
+            <div class="mini-card-heading">
+              <h2>Acesso rápido</h2>
+              <span>Atalhos</span>
+            </div>
+
+            <button type="button" class="quick-link"
+              (click)="abrirSecao('arquivos')">
+              <span class="quick-icon">▱</span>
+              <span>
+                <strong>Meus arquivos</strong>
+                <small>Consulte seus documentos</small>
+              </span>
+              <b>›</b>
+            </button>
+
+            <button type="button" class="quick-link"
+              (click)="abrirSecao('perfil')">
+              <span class="quick-icon">♙</span>
+              <span>
+                <strong>Meu perfil</strong>
+                <small>Atualize seus dados</small>
+              </span>
+              <b>›</b>
+            </button>
+
+            <button type="button" class="quick-link"
+              (click)="abrirSecao('configuracoes')">
+              <span class="quick-icon">⚙</span>
+              <span>
+                <strong>Configurações</strong>
+                <small>Preferências da conta</small>
+              </span>
+              <b>›</b>
+            </button>
+
+          </section>
+
+        </aside>
       </div>
 
+      <div class="bottom-grid">
+
+        <section class="encouragement-card">
+          <div class="encouragement-icon">✦</div>
+          <div>
+            <span class="eyebrow">VOCÊ ESTÁ NO CAMINHO CERTO</span>
+            <h2>Continue evoluindo!</h2>
+            <p>Cada etapa concluída aproxima você da realização do seu projeto.</p>
+          </div>
+          <span class="decorative-star">✧</span>
+        </section>
+
+        <section class="support-card">
+          <span class="support-icon">?</span>
+          <div>
+            <h2>Precisa de ajuda?</h2>
+            <p>Conte com a nossa equipe para tirar suas dúvidas.</p>
+            <a href="mailto:suporte@tfcdigital.edu.br">
+              Falar com o suporte <span>→</span>
+            </a>
+          </div>
+        </section>
+
+      </div>
     </section>
 
     <!-- ENTREGA -->
+    <section class="subpage" *ngIf="secao === 'entregar'">
 
-    <section
-      class="dashboard"
-      *ngIf="secao === 'entregar'">
+      <span class="eyebrow">ENVIO DE DOCUMENTOS</span>
+      <h1>Entregar trabalho</h1>
 
-      <span class="eyebrow">
-        ENVIO DE DOCUMENTOS
-      </span>
-
-      <h1>
-        Entregar trabalho
-      </h1>
-
-      <p>
-        Selecione a versão final do seu TCC em PDF.
+      <p class="page-intro">
+        Envie a versão do seu TCC para manter seu projeto atualizado.
       </p>
 
       <section class="card form-card">
 
+        <div class="form-title">
+          <span class="quick-icon large">⇧</span>
+          <div>
+            <h2>Enviar documento</h2>
+            <p>Selecione seu arquivo em formato PDF. Tamanho máximo: 30 MB.</p>
+          </div>
+        </div>
+
         <form (ngSubmit)="enviarTrabalho()">
 
-          <div class="field">
+          <div class="upload-area">
+            <span class="upload-icon">⇧</span>
+            <strong>Escolha o arquivo do seu TCC</strong>
+            <small>Somente arquivos PDF · Até 30 MB</small>
 
-            <label for="arquivoTcc">
-              Arquivo PDF (máximo 30 MB)
-            </label>
-
-            <input
-              id="arquivoTcc"
-              type="file"
+            <input id="arquivoTcc" type="file"
               accept=".pdf,application/pdf"
               (change)="selecionarArquivo($event)">
 
+            <label for="arquivoTcc" class="secondary-button">
+              Selecionar arquivo
+            </label>
+
+            <p class="selected-file" *ngIf="arquivoSelecionado">
+              Selecionado: {{ arquivoSelecionado.name }}
+            </p>
           </div>
 
-          <p *ngIf="arquivoSelecionado">
+          <p class="form-message" *ngIf="mensagem">{{ mensagem }}</p>
 
-            Selecionado:
-            {{ arquivoSelecionado.name }}
-
-          </p>
-
-          <p
-            class="form-message"
-            *ngIf="mensagem">
-
-            {{ mensagem }}
-
-          </p>
-
-          <button
-            type="submit"
-            class="primary-button"
+          <button type="submit" class="primary-button"
             [disabled]="!arquivoSelecionado">
-
-            Confirmar entrega →
-
+            Confirmar entrega <span>→</span>
           </button>
 
         </form>
-
       </section>
-
     </section>
 
     <!-- ARQUIVOS -->
+    <section class="subpage" *ngIf="secao === 'arquivos'">
 
-    <section
-      class="dashboard"
-      *ngIf="secao === 'arquivos'">
+      <span class="eyebrow">DOCUMENTOS DO PROJETO</span>
+      <h1>Meus arquivos</h1>
 
-      <span class="eyebrow">
-        DOCUMENTOS
-      </span>
-
-      <h1>
-        Meus arquivos
-      </h1>
-
-      <p>
-        Consulte os documentos listados no seu projeto.
+      <p class="page-intro">
+        Consulte os documentos registrados no seu projeto.
       </p>
 
       <section class="card files-card">
 
-        <div
-          class="file-row"
-          *ngFor="let arquivo of arquivos">
-
-          <div class="file-icon">
-            {{ arquivo.tipo }}
-          </div>
-
-          <div class="file-info">
-
-            <strong>
-              {{ arquivo.nome }}
-            </strong>
-
-            <small>
-              {{ arquivo.detalhes }}
-            </small>
-
-          </div>
-
-          <button
-            type="button"
-            class="download-button"
-            (click)="baixarArquivo(arquivo)">
-
-            ↓
-
-          </button>
-
+        <div class="list-heading">
+          <h2>Documentos</h2>
+          <span>{{ arquivos.length }} arquivo(s)</span>
         </div>
 
-        <p *ngIf="arquivos.length === 0">
+        <div class="file-row" *ngFor="let arquivo of arquivos">
+          <span class="file-icon">{{ arquivo.tipo }}</span>
+
+          <span class="file-info">
+            <strong>{{ arquivo.nome }}</strong>
+            <small>{{ arquivo.detalhes }}</small>
+          </span>
+
+          <button type="button" class="download-button"
+            aria-label="Baixar arquivo"
+            (click)="baixarArquivo(arquivo)">
+            ↓
+          </button>
+        </div>
+
+        <p class="empty-state" *ngIf="arquivos.length === 0">
           Nenhum arquivo cadastrado.
         </p>
 
       </section>
-
     </section>
 
     <!-- PERFIL -->
+    <section class="subpage" *ngIf="secao === 'perfil'">
 
-    <section
-      class="dashboard"
-      *ngIf="secao === 'perfil'">
+      <span class="eyebrow">MINHA CONTA</span>
+      <h1>Meu perfil</h1>
 
-      <span class="eyebrow">
-        MINHA CONTA
-      </span>
-
-      <h1>
-        Meu perfil
-      </h1>
-
-      <p>
-        Atualize seus dados pessoais e acadêmicos.
+      <p class="page-intro">
+        Mantenha seus dados pessoais e acadêmicos atualizados.
       </p>
 
-      <section class="card profile-card">
+      <section class="card form-card">
 
-        <div class="profile-header">
-
-          <div class="avatar profile-avatar">
-            {{ iniciais }}
-          </div>
-
+        <div class="profile-summary">
+          <span class="avatar profile-avatar">{{ iniciais }}</span>
           <div>
-
-            <h2>
-              {{ aluno }}
-            </h2>
-
-            <p>
-              {{ curso }}
-            </p>
-
-            <span class="status">
-              Perfil de aluno
-            </span>
-
+            <h2>{{ aluno.nome }}</h2>
+            <p>{{ aluno.curso }}</p>
+            <span class="status status-soft">Perfil de aluno</span>
           </div>
-
         </div>
 
         <form (ngSubmit)="salvarPerfil()">
 
           <div class="field">
-
-            <label for="perfilNome">
-              Nome completo
-            </label>
-
-            <input
-              id="perfilNome"
-              name="perfilNome"
-              [(ngModel)]="aluno"
-              required>
-
+            <label for="perfilNome">Nome completo</label>
+            <input id="perfilNome" name="nome"
+              [(ngModel)]="nome" required>
           </div>
 
           <div class="field">
-
-            <label for="perfilEmail">
-              E-mail
-            </label>
-
-            <input
-              id="perfilEmail"
-              name="perfilEmail"
-              type="email"
-              [(ngModel)]="email"
-              required>
-
+            <label for="perfilEmail">E-mail</label>
+            <input id="perfilEmail" name="email"
+              type="email" [(ngModel)]="email" required>
           </div>
 
           <div class="field">
-
-            <label for="perfilCurso">
-              Curso
-            </label>
-
-            <input
-              id="perfilCurso"
-              name="perfilCurso"
-              [(ngModel)]="curso"
-              required>
-
+            <label for="perfilCurso">Curso</label>
+            <input id="perfilCurso" name="curso"
+              [(ngModel)]="curso" required>
           </div>
 
-          <p
-            class="form-message"
-            *ngIf="mensagem">
+          <p class="form-message" *ngIf="mensagem">{{ mensagem }}</p>
 
-            {{ mensagem }}
-
-          </p>
-
-          <button
-            type="submit"
-            class="primary-button">
-
+          <button type="submit" class="primary-button">
             Salvar perfil
-
           </button>
 
         </form>
-
       </section>
-
     </section>
 
     <!-- CONFIGURAÇÕES -->
+    <section class="subpage" *ngIf="secao === 'configuracoes'">
 
-    <section
-      class="dashboard"
-      *ngIf="secao === 'configuracoes'">
+      <span class="eyebrow">PREFERÊNCIAS DA CONTA</span>
+      <h1>Configurações</h1>
 
-      <span class="eyebrow">
-        PREFERÊNCIAS
-      </span>
-
-      <h1>
-        Configurações
-      </h1>
-
-      <p>
-        Gerencie os dados apresentados no seu perfil.
+      <p class="page-intro">
+        Gerencie as informações da sua conta.
       </p>
 
       <section class="card form-card">
 
+        <h2>Dados da conta</h2>
+        <p class="form-description">
+          As alterações também serão refletidas no seu perfil.
+        </p>
+
         <form (ngSubmit)="salvarConfiguracoes()">
 
           <div class="field">
-
-            <label for="configNome">
-              Nome
-            </label>
-
-            <input
-              id="configNome"
-              name="configNome"
-              [(ngModel)]="aluno"
-              required>
-
+            <label for="configNome">Nome</label>
+            <input id="configNome" name="configNome"
+              [(ngModel)]="nome" required>
           </div>
 
           <div class="field">
-
-            <label for="configEmail">
-              E-mail
-            </label>
-
-            <input
-              id="configEmail"
-              name="configEmail"
-              type="email"
-              [(ngModel)]="email"
-              required>
-
+            <label for="configEmail">E-mail</label>
+            <input id="configEmail" name="configEmail"
+              type="email" [(ngModel)]="email" required>
           </div>
 
           <div class="field">
-
-            <label for="configCurso">
-              Curso
-            </label>
-
-            <input
-              id="configCurso"
-              name="configCurso"
-              [(ngModel)]="curso"
-              required>
-
+            <label for="configCurso">Curso</label>
+            <input id="configCurso" name="configCurso"
+              [(ngModel)]="curso" required>
           </div>
 
-          <p
-            class="form-message"
-            *ngIf="mensagem">
+          <p class="form-message" *ngIf="mensagem">{{ mensagem }}</p>
 
-            {{ mensagem }}
-
-          </p>
-
-          <button
-            type="submit"
-            class="primary-button">
-
+          <button type="submit" class="primary-button">
             Salvar configurações
-
           </button>
 
         </form>
-
       </section>
-
     </section>
 
   </main>
+
+  <footer class="page-footer">
+    <span>© 2026 TFC DIGITAL</span>
+    <span>Seu espaço para construir o futuro.</span>
+  </footer>
 
 </div>

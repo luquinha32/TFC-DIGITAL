@@ -4,18 +4,16 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
-interface Atividade {
-  icone: string;
-  titulo: string;
-  descricao: string;
-  data: string;
+interface Etapa {
+  nome: string;
+  concluida: boolean;
 }
 
 interface Arquivo {
   tipo: string;
   nome: string;
   detalhes: string;
-  conteudo?: string;
+  conteudo?: File;
 }
 
 @Component({
@@ -26,130 +24,107 @@ interface Arquivo {
   styleUrl: './dashboard.css'
 })
 export class DashboardComponent {
+
   secao = 'visao-geral';
 
-  aluno = 'Marina Silva';
-  email = 'marina@tfcdigital.edu.br';
-  curso = 'Arquitetura e Urbanismo';
+  aluno = {
+    nome: 'Marina Silva',
+    email: 'marina@tfcdigital.edu.br',
+    curso: 'Arquitetura e Urbanismo'
+  };
+
+  nome = this.aluno.nome;
+  email = this.aluno.email;
+  curso = this.aluno.curso;
 
   area = 'ARQUITETURA';
-  tituloTcc =
-    'Habitação social e o direito à cidade: novas perspectivas urbanas';
+
+  tituloTcc = 'Habitação social e o direito à cidade: novas perspectivas urbanas';
+
   orientador = 'Prof. Augusto Lima';
 
   progresso = 72;
   etapasConcluidas = 3;
 
   mensagem = '';
+
   arquivoSelecionado: File | null = null;
 
-  etapas = [
-    'Projeto',
-    'Pesquisa',
-    'Redação',
-    'Revisão',
-    'Entrega'
-  ];
-
-  atividades: Atividade[] = [
-    {
-      icone: '✓',
-      titulo: 'Capítulo 3 aprovado',
-      descricao: 'Seu orientador aprovou a última versão.',
-      data: 'Hoje'
-    },
-    {
-      icone: '▤',
-      titulo: 'Comentário do orientador',
-      descricao: 'Revise as referências da página 42.',
-      data: 'Ontem'
-    },
-    {
-      icone: '⇧',
-      titulo: 'Arquivo enviado',
-      descricao: 'Registro de demonstração do sistema.',
-      data: 'Recentemente'
-    }
+  etapas: Etapa[] = [
+    { nome: 'Projeto', concluida: true },
+    { nome: 'Pesquisa', concluida: true },
+    { nome: 'Redação', concluida: true },
+    { nome: 'Revisão', concluida: false },
+    { nome: 'Entrega', concluida: false }
   ];
 
   arquivos: Arquivo[] = [
     {
       tipo: 'PDF',
-      nome: 'TCC_Marina_v4.pdf',
-      detalhes: 'Documento de demonstração',
-      conteudo: 'Exemplo de documento TFC Digital.'
+      nome: 'Projeto_TCC.pdf',
+      detalhes: 'Documento do projeto'
     },
     {
-      tipo: 'DOC',
-      nome: 'Referencias_revisadas.docx',
-      detalhes: 'Documento de demonstração',
-      conteudo: 'Exemplo de referências do TCC.'
+      tipo: 'DOCX',
+      nome: 'Pesquisa_TCC.docx',
+      detalhes: 'Documento de pesquisa'
     }
   ];
 
+  configuracoes = {
+    notificacoes: true,
+    avisosEmail: true
+  };
+
   constructor(private router: Router) {
-    // Recupera os dados do perfil salvos neste navegador.
-    if (typeof localStorage !== 'undefined') {
-      const dados = localStorage.getItem('tfc-perfil');
-
-      if (dados) {
-        try {
-          const perfil = JSON.parse(dados);
-
-          this.aluno = perfil.aluno ?? this.aluno;
-          this.email = perfil.email ?? this.email;
-          this.curso = perfil.curso ?? this.curso;
-        } catch {
-          localStorage.removeItem('tfc-perfil');
-        }
-      }
-    }
+    this.carregarPerfil();
   }
 
   get iniciais(): string {
-    return this.aluno
-      .trim()
-      .split(/\s+/)
+    return this.aluno.nome
+      .split(' ')
+      .filter(parte => parte.length > 0)
+      .map(parte => parte[0])
       .slice(0, 2)
-      .map(nome => nome.charAt(0).toUpperCase())
-      .join('');
+      .join('')
+      .toUpperCase();
   }
 
-  abrirSecao(nome: string): void {
-  this.secao = nome;
-  this.mensagem = '';
-}
+  abrirSecao(secao: string): void {
+    this.secao = secao;
+    this.mensagem = '';
+  }
 
-  sair(event?: Event): void {
-    event?.preventDefault();
+  sair(): void {
     this.router.navigate(['/login']);
   }
 
   selecionarArquivo(event: Event): void {
     const input = event.target as HTMLInputElement;
-    const arquivo = input.files?.[0] ?? null;
-
-    this.arquivoSelecionado = null;
-    this.mensagem = '';
+    const arquivo = input.files?.[0];
 
     if (!arquivo) {
+      this.arquivoSelecionado = null;
       return;
     }
 
-    if (!arquivo.name.toLowerCase().endsWith('.pdf')) {
-      this.mensagem = 'Selecione um arquivo com extensão PDF.';
+    if (arquivo.type !== 'application/pdf' &&
+        !arquivo.name.toLowerCase().endsWith('.pdf')) {
+      this.mensagem = 'Selecione um arquivo PDF.';
       input.value = '';
+      this.arquivoSelecionado = null;
       return;
     }
 
     if (arquivo.size > 30 * 1024 * 1024) {
       this.mensagem = 'O arquivo deve ter no máximo 30 MB.';
       input.value = '';
+      this.arquivoSelecionado = null;
       return;
     }
 
+    this.mensagem = '';
     this.arquivoSelecionado = arquivo;
-    this.mensagem = 'PDF selecionado com sucesso.';
   }
 
   entregarTrabalho(): void {
@@ -158,104 +133,108 @@ export class DashboardComponent {
 
   enviarTrabalho(): void {
     if (!this.arquivoSelecionado) {
-      this.mensagem = 'Selecione um arquivo PDF primeiro.';
+      this.mensagem = 'Selecione um arquivo antes de enviar.';
       return;
     }
 
     const arquivo = this.arquivoSelecionado;
 
-    // Demonstração local: registra o arquivo na lista da tela.
     this.arquivos.unshift({
       tipo: 'PDF',
       nome: arquivo.name,
-      detalhes: this.formatarTamanho(arquivo.size),
-      conteudo: 'Arquivo selecionado: ' + arquivo.name
+      detalhes: 'Documento enviado para avaliação',
+      conteudo: arquivo
     });
-
-    this.atividades.unshift({
-      icone: '⇧',
-      titulo: 'Trabalho selecionado',
-      descricao: arquivo.name,
-      data: 'Agora'
-    });
-
-    this.mensagem =
-      'Arquivo adicionado à lista nesta demonstração. ' +
-      'Ele ainda não foi enviado ao servidor.';
 
     this.arquivoSelecionado = null;
-  }
+    this.mensagem = 'Trabalho enviado com sucesso!';
 
-  private formatarTamanho(bytes: number): string {
-    if (bytes < 1024 * 1024) {
-      return `${(bytes / 1024).toFixed(0)} KB`;
+    const input = document.getElementById('arquivoTcc') as HTMLInputElement | null;
+
+    if (input) {
+      input.value = '';
     }
-
-    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
   }
 
-  verTodasAtividades(event: Event): void {
-    event.preventDefault();
-    this.abrirSecao('atividades');
-  }
-
-  verArquivos(event: Event): void {
-    event.preventDefault();
+  verArquivos(): void {
     this.abrirSecao('arquivos');
   }
 
   baixarArquivo(arquivo: Arquivo): void {
-    // Baixa o conteúdo real somente para arquivos de demonstração.
-    // Arquivos enviados pelo usuário exigem armazenamento no servidor.
-    if (arquivo.conteudo) {
-      const blob = new Blob(
-        [arquivo.conteudo],
-        { type: 'text/plain;charset=utf-8' }
-      );
-
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-
-      link.href = url;
-      link.download = arquivo.nome.endsWith('.pdf')
-        ? 'documento-demonstracao.txt'
-        : 'arquivo-demonstracao.txt';
-
-      link.click();
-      URL.revokeObjectURL(url);
+    if (!arquivo.conteudo) {
+      this.mensagem = 'O arquivo de exemplo não está disponível para download.';
       return;
     }
 
-    window.alert(
-      'O arquivo original precisa estar armazenado no servidor para download.'
-    );
+    const url = URL.createObjectURL(arquivo.conteudo);
+    const link = document.createElement('a');
+
+    link.href = url;
+    link.download = arquivo.nome;
+    link.click();
+
+    URL.revokeObjectURL(url);
   }
 
   salvarPerfil(): void {
-    if (!this.aluno.trim() || !this.email.trim() || !this.curso.trim()) {
-      this.mensagem = 'Preencha nome, e-mail e curso.';
-      return;
-    }
+    this.atualizarDadosAluno();
 
-    this.aluno = this.aluno.trim();
-    this.email = this.email.trim();
-    this.curso = this.curso.trim();
+    localStorage.setItem('tfc-perfil', JSON.stringify(this.aluno));
 
-    const perfil = {
-      aluno: this.aluno,
-      email: this.email,
-      curso: this.curso
-    };
-
-    try {
-      localStorage.setItem('tfc-perfil', JSON.stringify(perfil));
-      this.mensagem = 'Perfil salvo com sucesso neste navegador.';
-    } catch {
-      this.mensagem = 'Não foi possível salvar os dados neste navegador.';
-    }
+    this.mensagem = 'Perfil atualizado com sucesso!';
   }
 
   salvarConfiguracoes(): void {
-    this.salvarPerfil();
+    this.atualizarDadosAluno();
+
+    localStorage.setItem('tfc-perfil', JSON.stringify(this.aluno));
+
+    localStorage.setItem(
+      'tfc-configuracoes',
+      JSON.stringify(this.configuracoes)
+    );
+
+    this.mensagem = 'Configurações salvas com sucesso!';
+  }
+
+  private atualizarDadosAluno(): void {
+    this.aluno.nome = this.nome;
+    this.aluno.email = this.email;
+    this.aluno.curso = this.curso;
+  }
+
+  private carregarPerfil(): void {
+    const perfilSalvo = localStorage.getItem('tfc-perfil');
+
+    if (perfilSalvo) {
+      try {
+        const perfil = JSON.parse(perfilSalvo);
+
+        this.aluno = {
+          ...this.aluno,
+          ...perfil
+        };
+
+        this.nome = this.aluno.nome;
+        this.email = this.aluno.email;
+        this.curso = this.aluno.curso;
+
+      } catch {
+        console.error('Não foi possível carregar o perfil.');
+      }
+    }
+
+    const configuracoesSalvas = localStorage.getItem('tfc-configuracoes');
+
+    if (configuracoesSalvas) {
+      try {
+        this.configuracoes = {
+          ...this.configuracoes,
+          ...JSON.parse(configuracoesSalvas)
+        };
+      } catch {
+        console.error('Não foi possível carregar as configurações.');
+      }
+    }
   }
 }

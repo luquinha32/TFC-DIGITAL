@@ -1,36 +1,140 @@
 
-<main class="login-page">
-  <section class="welcome-panel" aria-label="Apresentação do TFC Digital">
-    <div class="brand">
-      <span class="brand-mark" aria-hidden="true"></span>
-      <span class="brand-name">TFC DIGITAL</span>
-    </div>
+<main class="home-page" *ngIf="telaInicial; else acesso">
 
-    <span class="decor-circle decor-circle-top" aria-hidden="true"></span>
-    <span class="decor-ring decor-ring-top" aria-hidden="true"></span>
-    <span class="decor-ring decor-ring-bottom" aria-hidden="true"></span>
+  <header class="topbar">
+    <a class="brand" href="#inicio">
+      <span class="brand-icon">TFC</span>
+      <span class="brand-text">
+        <strong>TFC DIGITAL</strong>
+        <small>PORTAL ACADÊMICO</small>
+      </span>
+    </a>
 
-    <div class="welcome-copy">
-      <p class="eyebrow"><span></span> SUA JORNADA ACADÊMICA</p>
-      <h1>O último passo<br>para uma grande<br>conquista.</h1>
+    <nav class="navigation">
+      <a class="selected" href="#inicio">Início</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#como-funciona">Como Funciona</a>
+      <a href="#duvidas">Dúvidas</a>
+      <a href="#contato">Contato</a>
+    </nav>
 
-      <p class="welcome-description">
-        Entregue, acompanhe e conclua seu trabalho final em um só lugar.
+    <button class="header-button" (click)="abrirAcesso('aluno')">
+      ↪ Entrar
+    </button>
+  </header>
+
+  <section class="hero" id="inicio">
+    <div class="hero-copy">
+      <h1>Bem-vindo ao<br>TFC Digital!</h1>
+
+      <p class="hero-description">
+        Seu portal acadêmico, de forma simples, segura
+        e organizada.
       </p>
 
-      <blockquote class="quote">
-        <p>
-          O conhecimento é a única riqueza que se multiplica
-          quando é compartilhada.
-        </p>
-        <cite>COMUNIDADE TFC DIGITAL</cite>
-      </blockquote>
+      <div class="features" id="como-funciona">
+        <div class="feature">
+          <span class="feature-icon">♧</span>
+          <span>Acesse suas<br>atividades</span>
+        </div>
+
+        <div class="feature">
+          <span class="feature-icon">▦</span>
+          <span>Confira seu<br>cronograma</span>
+        </div>
+
+        <div class="feature">
+          <span class="feature-icon">▥</span>
+          <span>Acompanhe seu<br>desempenho</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-art" aria-label="Notebook, livros e capelo acadêmico">
+      <svg viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="310" cy="365" rx="240" ry="23" fill="#a9c4fa" opacity=".35"/>
+
+        <!-- Capelo -->
+        <path d="M310 65 L490 105 L345 180 L165 130 Z" fill="#073caa"/>
+        <path d="M225 137 L345 185 Q410 185 438 145 L438 205 Q370 255 280 202 Z" fill="#082d83"/>
+        <path d="M490 105 L490 175" stroke="#0b3eae" stroke-width="5"/>
+        <circle cx="490" cy="177" r="6" fill="#0b3eae"/>
+        <path d="M340 90 Q400 95 465 110" stroke="#8db5ff" stroke-width="3" fill="none"/>
+
+        <!-- Livros -->
+        <path d="M75 265 Q190 235 320 275 L320 310 Q190 270 75 300 Z" fill="#fff" stroke="#1758d5" stroke-width="7"/>
+        <path d="M75 300 Q190 270 320 310 L320 345 Q190 305 75 335 Z" fill="#174db7"/>
+        <path d="M75 335 Q190 305 320 345 L320 365 Q190 330 75 357 Z" fill="#fff" stroke="#174db7" stroke-width="5"/>
+        <path d="M85 280 Q195 253 310 288" stroke="#8bb7ff" stroke-width="5" fill="none"/>
+
+        <!-- Notebook -->
+        <path d="M330 185 L530 165 Q548 164 548 183 L520 320 L300 340 L330 185Z" fill="#082b77"/>
+        <path d="M340 194 L528 176 L505 305 L315 322 Z" fill="#0c45b5" stroke="#7eabff" stroke-width="5"/>
+        <rect x="390" y="220" width="75" height="60" rx="12" transform="rotate(-7 390 220)" fill="none" stroke="#d6e6ff" stroke-width="4"/>
+        <text x="400" y="260" font-size="25" font-weight="bold" fill="white" transform="rotate(-7 400 260)">TFC</text>
+        <path d="M300 340 L520 320 L575 348 Q580 355 563 359 L330 379 Q312 380 295 366 Z" fill="#6d9ff2" stroke="#174db7" stroke-width="4"/>
+        <path d="M345 350 L515 335" stroke="#dceaff" stroke-width="4"/>
+
+        <!-- Detalhes -->
+        <path d="M100 135 L125 153 M125 118 L140 145 M85 165 L115 165" stroke="#1452c9" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="550" cy="100" r="45" fill="#6b9df2" opacity=".25"/>
+      </svg>
     </div>
   </section>
 
-  <section class="form-panel" aria-label="Formulário de acesso">
-    <div class="login-card">
-      <p class="form-eyebrow">BEM-VINDO DE VOLTA</p>
+  <section class="registration" id="sobre">
+    <h2>Faça seu cadastro</h2>
+    <p>Escolha o perfil que melhor representa você:</p>
+
+    <div class="profile-cards">
+      <button class="profile-card" (click)="abrirAcesso('aluno')">
+        <span class="profile-icon">👤</span>
+        <span class="profile-info">
+          <strong>Aluno</strong>
+          <small>Acesse suas turmas, atividades<br>e notas.</small>
+        </span>
+        <span class="profile-arrow">›</span>
+      </button>
+
+      <button class="profile-card" (click)="abrirAcesso('professor')">
+        <span class="profile-icon">👨‍🏫</span>
+        <span class="profile-info">
+          <strong>Professor</strong>
+          <small>Gerencie suas turmas, avaliações<br>e conteúdos.</small>
+        </span>
+        <span class="profile-arrow">›</span>
+      </button>
+    </div>
+  </section>
+
+  <footer class="home-footer" id="contato">
+    <div class="footer-brand">
+      <span class="brand-icon">TFC</span>
+      <span class="brand-text">
+        <strong>TFC DIGITAL</strong>
+        <small>PORTAL ACADÊMICO</small>
+      </span>
+    </div>
+
+    <p>Aprender. Evoluir. Conquistar.</p>
+
+    <div class="social-links">
+      <a href="https://instagram.com" target="_blank" aria-label="Instagram">◎</a>
+      <a href="https://youtube.com" target="_blank" aria-label="YouTube">▶</a>
+      <a href="mailto:suporte@tfcdigital.edu.br" aria-label="E-mail">✉</a>
+    </div>
+  </footer>
+</main>
+
+<ng-template #acesso>
+  <main class="access-page">
+    <button class="back-button" type="button" (click)="voltarInicio()">
+      ← Voltar ao início
+    </button>
+
+    <section class="access-card">
+      <div class="access-logo">TFC</div>
+      <p class="form-eyebrow">TFC DIGITAL · PORTAL ACADÊMICO</p>
       <h2>Acesse sua conta</h2>
       <p class="form-description">
         Entre com suas credenciais institucionais.
@@ -38,135 +142,60 @@
 
       <form (ngSubmit)="entrar()" #loginForm="ngForm">
 
-        <fieldset class="role-switch">
-          <legend class="visually-hidden">Selecione seu perfil</legend>
-
-          <label
-            class="role-option"
-            [class.active]="perfil === 'aluno'">
-            <input
-              type="radio"
-              name="perfil"
-              value="aluno"
-              [(ngModel)]="perfil"
-              (change)="atualizarPerfil()">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx="12" cy="7" r="4"/>
-            </svg>
-            <span>Aluno</span>
-          </label>
-
-          <label
-            class="role-option"
-            [class.active]="perfil === 'professor'">
-            <input
-              type="radio"
-              name="perfil"
-              value="professor"
-              [(ngModel)]="perfil"
-              (change)="atualizarPerfil()">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="5" y="2" width="14" height="20" rx="2"/>
-              <path d="M8 18h8"/>
-            </svg>
-            <span>Professor</span>
-          </label>
-        </fieldset>
-
-        <div class="field">
-          <label for="email">E-mail institucional</label>
-          <div class="input-wrap">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="3" y="5" width="18" height="14" rx="2"/>
-              <path d="m3 7 9 6 9-6"/>
-            </svg>
-
-            <input
-              type="email"
-              id="email"
-              name="email"
-              [(ngModel)]="email"
-              placeholder="seu.email@tfcdigital.edu.br"
-              autocomplete="username"
-              required
-              email>
-          </div>
+        <div class="role-switch">
+          <button type="button"
+            [class.active]="perfil === 'aluno'"
+            (click)="perfil = 'aluno'">
+            Aluno
+          </button>
+          <button type="button"
+            [class.active]="perfil === 'professor'"
+            (click)="perfil = 'professor'">
+            Professor
+          </button>
         </div>
 
-        <div class="field">
-          <label for="password">Senha</label>
-          <div class="input-wrap">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx="12" cy="7" r="4"/>
-            </svg>
+        <label for="email">E-mail institucional</label>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="seu.email@tfcdigital.edu.br"
+          required>
 
-            <input
-              [type]="mostrarSenha ? 'text' : 'password'"
-              id="password"
-              name="password"
-              [(ngModel)]="senha"
-              placeholder="Digite sua senha"
-              autocomplete="current-password"
-              required>
-
-            <button
-              class="password-toggle"
-              type="button"
-              (click)="alternarSenha()"
-              [attr.aria-label]="mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/>
-                <circle cx="12" cy="12" r="3"/>
-              </svg>
-            </button>
-          </div>
+        <label for="password">Senha</label>
+        <div class="password-field">
+          <input
+            id="password"
+            [type]="mostrarSenha ? 'text' : 'password'"
+            name="password"
+            [(ngModel)]="senha"
+            placeholder="Digite sua senha"
+            required>
+          <button type="button" (click)="alternarSenha()">
+            {{ mostrarSenha ? 'Ocultar' : 'Mostrar' }}
+          </button>
         </div>
 
         <div class="form-options">
           <label class="remember">
-            <input
-              type="checkbox"
-              name="lembrar"
-              [(ngModel)]="lembrarDeMim">
-            <span>Lembrar de mim</span>
+            <input type="checkbox" name="lembrar" [(ngModel)]="lembrarDeMim">
+            Lembrar de mim
           </label>
-
-          <a href="#" (click)="esqueciSenha($event)">
-            Esqueci minha senha
-          </a>
+          <a href="#" (click)="esqueciSenha($event)">Esqueci minha senha</a>
         </div>
 
-        <button
-          class="submit-button"
-          type="submit"
-          [disabled]="loginForm.invalid">
-          <span>Entrar como {{ perfil }}</span>
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M5 12h14"/>
-            <path d="m12 5 7 7-7 7"/>
-          </svg>
+        <button class="submit-button" type="submit" [disabled]="loginForm.invalid">
+          Entrar como {{ perfil }}
         </button>
 
-        <p class="form-message" role="status" aria-live="polite">
-          {{ mensagem }}
-        </p>
+        <p class="form-message">{{ mensagem }}</p>
       </form>
 
-      <div class="support">
-        <span>Precisa de ajuda?</span>
-        <a href="mailto:suporte@tfcdigital.edu.br">
-          Fale com o suporte acadêmico
-        </a>
-      </div>
-    </div>
-  </section>
-</main>
-
-<button
-  class="help-button"
-  type="button"
-  aria-label="Ajuda"
-  title="Ajuda"
-  (click)="abrirAjuda()">?</button>
+      <button class="support-button" (click)="abrirAjuda()">
+        Precisa de ajuda? Fale com o suporte
+      </button>
+    </section>
+  </main>
+</ng-template>

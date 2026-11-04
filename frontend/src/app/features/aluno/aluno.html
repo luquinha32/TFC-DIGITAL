@@ -1,0 +1,298 @@
+<div class="aluno-page">
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">T</div>
+      <span>TFC <strong>DIGITAL</strong></span>
+    </div>
+
+    <div class="topbar-right">
+      <span class="semestre">{{ semestre }}</span>
+
+      <button class="notification" aria-label="Notificações">
+        <span>♧</span>
+        <i></i>
+      </button>
+
+      <div class="user-top">
+        <div class="avatar">MS</div>
+        <div>
+          <strong>{{ nome }}</strong>
+          <small>Estudante</small>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <section class="welcome">
+      <div>
+        <span class="welcome-label">ÁREA DO ESTUDANTE</span>
+        <h1>Olá, {{ nome }}! 👋</h1>
+        <p>Acompanhe seu trabalho acadêmico e organize suas atividades.</p>
+      </div>
+
+      <div class="welcome-date">
+        <span>SEMESTRE LETIVO</span>
+        <strong>{{ semestre }}</strong>
+      </div>
+    </section>
+
+    <nav class="navigation">
+      <button
+        [class.active]="secao === 'Início'"
+        (click)="navegar('Início')">
+        <span>⌂</span> Início
+      </button>
+
+      <button
+        [class.active]="secao === 'Meu Trabalho'"
+        (click)="navegar('Meu Trabalho')">
+        <span>▤</span> Meu Trabalho
+      </button>
+
+      <button
+        [class.active]="secao === 'Entregas'"
+        (click)="navegar('Entregas')">
+        <span>⇧</span> Entregas
+      </button>
+
+      <button
+        [class.active]="secao === 'Orientações'"
+        (click)="navegar('Orientações')">
+        <span>♧</span> Orientações
+      </button>
+
+      <button
+        [class.active]="secao === 'Configurações'"
+        (click)="navegar('Configurações')">
+        <span>⚙</span> Configurações
+      </button>
+    </nav>
+
+    <section *ngIf="secao === 'Início'">
+
+      <div class="section-heading">
+        <div>
+          <h2>Visão geral do seu trabalho</h2>
+          <p>Acompanhe o andamento do seu TFC.</p>
+        </div>
+
+        <span class="status-badge">● Em andamento</span>
+      </div>
+
+      <div class="dashboard-grid">
+
+        <article class="card project-card">
+          <div class="card-heading">
+            <div>
+              <span class="eyebrow">MEU PROJETO</span>
+              <h3>Habitação social e o direito à cidade: novas perspectivas urbanas</h3>
+            </div>
+            <div class="project-icon">▤</div>
+          </div>
+
+          <div class="project-info">
+            <div>
+              <span>Orientador</span>
+              <strong>Prof. Augusto Lima</strong>
+            </div>
+            <div>
+              <span>Área de conhecimento</span>
+              <strong>Arquitetura e Urbanismo</strong>
+            </div>
+          </div>
+
+          <div class="progress-heading">
+            <strong>Progresso do trabalho</strong>
+            <strong>72%</strong>
+          </div>
+
+          <div class="progress-bar">
+            <div class="progress-value"></div>
+          </div>
+
+          <div class="progress-footer">
+            <span>3 de 5 etapas concluídas</span>
+            <span>72% concluído</span>
+          </div>
+        </article>
+
+        <article class="card profile-card">
+          <span class="eyebrow">MEU PERFIL</span>
+
+          <div class="profile-avatar">MS</div>
+
+          <h3>{{ nome }}</h3>
+          <p>Estudante</p>
+
+          <div class="profile-details">
+            <div>
+              <span>Curso</span>
+              <strong>Arquitetura e Urbanismo</strong>
+            </div>
+
+            <div>
+              <span>E-mail</span>
+              <strong>marina@tfcdigital.edu.br</strong>
+            </div>
+
+            <div>
+              <span>Semestre</span>
+              <strong>{{ semestre }}</strong>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="section-heading quick-heading">
+        <div>
+          <h2>Acesso rápido</h2>
+          <p>Encontre as principais funcionalidades.</p>
+        </div>
+      </div>
+
+      <div class="quick-grid">
+
+        <button class="quick-card" (click)="navegar('Meu Trabalho')">
+          <div class="quick-icon purple">▤</div>
+          <div>
+            <strong>Meu trabalho</strong>
+            <span>Consulte os dados do seu projeto.</span>
+          </div>
+          <span class="arrow">→</span>
+        </button>
+
+        <button class="quick-card" (click)="navegar('Entregas')">
+          <div class="quick-icon blue">⇧</div>
+          <div>
+            <strong>Enviar trabalho</strong>
+            <span>Faça suas entregas acadêmicas.</span>
+          </div>
+          <span class="arrow">→</span>
+        </button>
+
+        <button class="quick-card" (click)="navegar('Orientações')">
+          <div class="quick-icon orange">♧</div>
+          <div>
+            <strong>Orientações</strong>
+            <span>Acompanhe suas orientações.</span>
+          </div>
+          <span class="arrow">→</span>
+        </button>
+
+      </div>
+
+      <div class="help-card">
+        <div class="help-icon">?</div>
+        <div>
+          <h3>Precisa de ajuda?</h3>
+          <p>Entre em contato com seu orientador para tirar dúvidas sobre o trabalho.</p>
+        </div>
+        <button (click)="navegar('Orientações')">Ver orientações →</button>
+      </div>
+
+    </section>
+
+    <section *ngIf="secao === 'Meu Trabalho'" class="content-card">
+      <span class="eyebrow">PROJETO ACADÊMICO</span>
+      <h2>Meu trabalho</h2>
+      <p>Confira as informações cadastradas do seu TFC.</p>
+
+      <div class="detail-row">
+        <span>Título</span>
+        <strong>Habitação social e o direito à cidade: novas perspectivas urbanas</strong>
+      </div>
+
+      <div class="detail-row">
+        <span>Orientador</span>
+        <strong>Prof. Augusto Lima</strong>
+      </div>
+
+      <div class="detail-row">
+        <span>Curso</span>
+        <strong>Arquitetura e Urbanismo</strong>
+      </div>
+
+      <div class="detail-row">
+        <span>Progresso</span>
+        <strong>72%</strong>
+      </div>
+    </section>
+
+    <section *ngIf="secao === 'Entregas'" class="content-card">
+      <span class="eyebrow">ENVIO DE ARQUIVOS</span>
+      <h2>Minhas entregas</h2>
+      <p>Selecione o arquivo do seu trabalho para preparar a entrega.</p>
+
+      <label class="upload-area">
+        <span class="upload-icon">⇧</span>
+        <strong>Selecione seu arquivo</strong>
+        <span>PDF, DOC ou DOCX</span>
+        <input
+          type="file"
+          accept=".pdf,.doc,.docx"
+          (change)="selecionarArquivo($event)">
+      </label>
+
+      <div class="selected-file" *ngIf="arquivoSelecionado">
+        <span>📄</span>
+        <strong>{{ arquivoSelecionado.name }}</strong>
+      </div>
+
+      <button class="primary-button" (click)="entregarTrabalho()">
+        Preparar entrega
+      </button>
+
+      <p class="message" *ngIf="mensagem">{{ mensagem }}</p>
+    </section>
+
+    <section *ngIf="secao === 'Orientações'" class="content-card">
+      <span class="eyebrow">ACOMPANHAMENTO</span>
+      <h2>Orientações</h2>
+      <p>Informações sobre o acompanhamento do seu trabalho acadêmico.</p>
+
+      <div class="orientation-card">
+        <div class="orientation-avatar">AL</div>
+        <div>
+          <strong>Prof. Augusto Lima</strong>
+          <span>Orientador do trabalho</span>
+        </div>
+        <span class="orientation-status">Orientador</span>
+      </div>
+
+      <div class="detail-row">
+        <span>Status do acompanhamento</span>
+        <strong>Em andamento</strong>
+      </div>
+    </section>
+
+    <section *ngIf="secao === 'Configurações'" class="content-card">
+      <span class="eyebrow">PREFERÊNCIAS</span>
+      <h2>Configurações</h2>
+      <p>Área de configurações da sua conta.</p>
+
+      <div class="detail-row">
+        <span>Nome</span>
+        <strong>{{ nome }}</strong>
+      </div>
+
+      <div class="detail-row">
+        <span>Perfil</span>
+        <strong>Estudante</strong>
+      </div>
+
+      <button class="logout-button" (click)="sair()">
+        Sair da conta
+      </button>
+    </section>
+
+    <footer class="footer">
+      <span>© 2026 TFC DIGITAL</span>
+      <span>Plataforma de gerenciamento de trabalhos acadêmicos</span>
+    </footer>
+
+  </main>
+</div>

@@ -1,0 +1,539 @@
+```html
+<div class="portal">
+
+  <!-- CABEÇALHO -->
+  <header class="topbar">
+
+    <div class="brand">
+      <div class="logo">TFC</div>
+      <div>
+        <strong>TFC DIGITAL</strong>
+        <small>PORTAL ACADÊMICO</small>
+      </div>
+    </div>
+
+    <div class="top-actions">
+
+      <span>SEMESTRE 2026</span>
+
+      <div class="notification-area">
+        <button class="notification" (click)="abrirNotificacoes()">
+          ♧ <b>{{ notificacoes }}</b>
+        </button>
+
+        <div class="notification-panel" *ngIf="mostrarNotificacoes">
+          <h3>Notificações</h3>
+
+          <p *ngIf="notificacoes > 0">
+            Você possui {{ notificacoes }} notificações não lidas.
+          </p>
+
+          <p *ngIf="notificacoes === 0">
+            Você não possui notificações pendentes.
+          </p>
+
+          <button (click)="marcarNotificacoesLidas()">
+            Marcar todas como lidas
+          </button>
+        </div>
+      </div>
+
+      <div class="avatar">AS</div>
+
+      <strong>Prof. {{ professor }}</strong>
+
+      <button class="logout" (click)="sair()">
+        ⇥ Sair
+      </button>
+
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar">
+
+      <button
+        *ngFor="let item of [
+          'Painel',
+          'Minhas turmas',
+          'Alunos',
+          'Trabalhos acadêmicos',
+          'Avaliações',
+          'Cronograma',
+          'Mensagens',
+          'Configurações'
+        ]"
+        [class.active]="secao === item"
+        (click)="navegar(item)">
+
+        <span>
+          {{ item === 'Painel' ? '⌂' :
+             item === 'Minhas turmas' ? '♟' :
+             item === 'Alunos' ? '♟' :
+             item === 'Trabalhos acadêmicos' ? '▤' :
+             item === 'Avaliações' ? '☑' :
+             item === 'Cronograma' ? '▦' :
+             item === 'Mensagens' ? '✉' : '⚙' }}
+        </span>
+
+        {{ item }}
+
+      </button>
+
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="content">
+
+      <section class="hero">
+
+        <h1>
+          {{ secao === 'Painel' ? 'Portal do Professor' : secao }}
+        </h1>
+
+        <h2>Bem-vinda, Prof. {{ professor }}!</h2>
+
+        <p>
+          Gerencie suas turmas, acompanhe as atividades
+          e fique por dentro do cronograma acadêmico.
+        </p>
+
+      </section>
+
+      <!-- PAINEL -->
+      <ng-container *ngIf="secao === 'Painel'">
+
+        <section class="stats">
+
+          <article class="stat">
+            <div class="stat-icon">♟</div>
+            <div>
+              <strong>4</strong>
+              <span>Minhas turmas</span>
+            </div>
+            <button (click)="navegar('Minhas turmas')">›</button>
+          </article>
+
+          <article class="stat">
+            <div class="stat-icon">☑</div>
+            <div>
+              <strong>12</strong>
+              <span>Trabalhos para corrigir</span>
+            </div>
+            <button (click)="navegar('Trabalhos acadêmicos')">›</button>
+          </article>
+
+          <article class="stat">
+            <div class="stat-icon">♟</div>
+            <div>
+              <strong>142</strong>
+              <span>Alunos ativos</span>
+            </div>
+            <button (click)="navegar('Alunos')">›</button>
+          </article>
+
+          <article class="stat">
+            <div class="stat-icon">▦</div>
+            <div>
+              <strong>3</strong>
+              <span>Próximas atividades</span>
+            </div>
+            <button (click)="navegar('Cronograma')">›</button>
+          </article>
+
+        </section>
+
+        <section class="dashboard-grid">
+
+          <!-- SUBMISSÕES -->
+          <article class="submissions card">
+
+            <div class="card-title">
+              <h2>▤ Últimas submissões dos alunos</h2>
+
+              <button (click)="navegar('Trabalhos acadêmicos')">
+                Ver todas →
+              </button>
+            </div>
+
+            <div class="table-scroll">
+
+              <table>
+
+                <thead>
+                  <tr>
+                    <th>Aluno(a)</th>
+                    <th>Turma</th>
+                    <th>Data de envio</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+
+                  <tr>
+                    <td>Maria Eduarda Oliveira</td>
+                    <td>3B - Fisioterapia</td>
+                    <td>04/11/2026 • 14:32</td>
+                    <td>
+                      <span class="status entregue">✓ Entregue</span>
+                    </td>
+                    <td>
+                      <button class="view"
+                        (click)="verTrabalho('Maria Eduarda Oliveira')">
+                        ◉ Ver trabalho
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Lucas Ferreira</td>
+                    <td>3B - Fisioterapia</td>
+                    <td>04/11/2026 • 13:50</td>
+                    <td>
+                      <span class="status pendente">◷ Pendente</span>
+                    </td>
+                    <td>
+                      <button class="view"
+                        (click)="verTrabalho('Lucas Ferreira')">
+                        ◉ Ver trabalho
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Beatriz Santos</td>
+                    <td>3A - Biologia</td>
+                    <td>04/11/2026 • 13:20</td>
+                    <td>
+                      <span class="status entregue">✓ Entregue</span>
+                    </td>
+                    <td>
+                      <button class="view"
+                        (click)="verTrabalho('Beatriz Santos')">
+                        ◉ Ver trabalho
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Rafael Lima</td>
+                    <td>3A - Biologia</td>
+                    <td>04/11/2026 • 12:47</td>
+                    <td>
+                      <span class="status entregue">✓ Entregue</span>
+                    </td>
+                    <td>
+                      <button class="view"
+                        (click)="verTrabalho('Rafael Lima')">
+                        ◉ Ver trabalho
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Camila Souza</td>
+                    <td>3C - Saúde Coletiva</td>
+                    <td>04/11/2026 • 11:30</td>
+                    <td>
+                      <span class="status pendente">◷ Pendente</span>
+                    </td>
+                    <td>
+                      <button class="view"
+                        (click)="verTrabalho('Camila Souza')">
+                        ◉ Ver trabalho
+                      </button>
+                    </td>
+                  </tr>
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </article>
+
+          <!-- PRÓXIMAS ATIVIDADES -->
+          <article class="activities card">
+
+            <h2>▦ Próximas atividades</h2>
+
+            <div class="timeline">
+
+              <div class="event">
+                <span class="dot"></span>
+                <small>05/11 • 19:00</small>
+                <strong>Entrega de trabalho – Fisioterapia</strong>
+                <span>Turma 3B</span>
+              </div>
+
+              <div class="event">
+                <span class="dot"></span>
+                <small>06/11 • 14:00</small>
+                <strong>Avaliação – Biologia</strong>
+                <span>Turma 3A</span>
+              </div>
+
+              <div class="event">
+                <span class="dot"></span>
+                <small>08/11 • 10:00</small>
+                <strong>Reunião de alinhamento</strong>
+                <span>Coordenação</span>
+              </div>
+
+            </div>
+
+            <button class="calendar"
+              (click)="navegar('Cronograma')">
+              ▦ Ver calendário completo
+            </button>
+
+          </article>
+
+        </section>
+
+      </ng-container>
+
+      <!-- MINHAS TURMAS -->
+      <section class="other-section card"
+        *ngIf="secao === 'Minhas turmas'">
+
+        <h2>♟ Minhas turmas</h2>
+
+        <p>Consulte e gerencie suas turmas acadêmicas.</p>
+
+        <div class="event">
+          <strong>Turma 3A - Biologia</strong>
+          <span>42 alunos cadastrados</span>
+        </div>
+
+        <div class="event">
+          <strong>Turma 3B - Fisioterapia</strong>
+          <span>38 alunos cadastrados</span>
+        </div>
+
+        <div class="event">
+          <strong>Turma 3C - Saúde Coletiva</strong>
+          <span>35 alunos cadastrados</span>
+        </div>
+
+        <button class="view" (click)="navegar('Painel')">
+          ← Voltar ao painel
+        </button>
+
+      </section>
+
+      <!-- ALUNOS -->
+      <section class="other-section card"
+        *ngIf="secao === 'Alunos'">
+
+        <h2>♟ Alunos</h2>
+
+        <p>Consulte os alunos cadastrados nas suas turmas.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Turma</th>
+              <th>Situação</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Maria Eduarda Oliveira</td>
+              <td>3B - Fisioterapia</td>
+              <td>Ativo</td>
+            </tr>
+            <tr>
+              <td>Lucas Ferreira</td>
+              <td>3B - Fisioterapia</td>
+              <td>Ativo</td>
+            </tr>
+            <tr>
+              <td>Beatriz Santos</td>
+              <td>3A - Biologia</td>
+              <td>Ativo</td>
+            </tr>
+            <tr>
+              <td>Rafael Lima</td>
+              <td>3A - Biologia</td>
+              <td>Ativo</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <button class="view" (click)="navegar('Painel')">
+          ← Voltar ao painel
+        </button>
+
+      </section>
+
+      <!-- TRABALHOS -->
+      <section class="other-section card"
+        *ngIf="secao === 'Trabalhos acadêmicos'">
+
+        <h2>▤ Trabalhos acadêmicos</h2>
+
+        <p>Acompanhe as submissões dos alunos e organize as correções.</p>
+
+        <div *ngIf="mensagem" class="message">
+          {{ mensagem }}
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Aluno</th>
+              <th>Trabalho</th>
+              <th>Situação</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Maria Eduarda Oliveira</td>
+              <td>Trabalho acadêmico</td>
+              <td>Entregue</td>
+            </tr>
+            <tr>
+              <td>Lucas Ferreira</td>
+              <td>Trabalho acadêmico</td>
+              <td>Pendente</td>
+            </tr>
+            <tr>
+              <td>Beatriz Santos</td>
+              <td>Trabalho acadêmico</td>
+              <td>Entregue</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <button class="view" (click)="navegar('Painel')">
+          ← Voltar ao painel
+        </button>
+
+      </section>
+
+      <!-- AVALIAÇÕES -->
+      <section class="other-section card"
+        *ngIf="secao === 'Avaliações'">
+
+        <h2>☑ Avaliações</h2>
+
+        <p>Gerencie avaliações e resultados acadêmicos.</p>
+
+        <div class="event">
+          <strong>Avaliação de Biologia</strong>
+          <span>Turma 3A</span>
+        </div>
+
+        <div class="event">
+          <strong>Avaliação de Fisioterapia</strong>
+          <span>Turma 3B</span>
+        </div>
+
+        <button class="view" (click)="navegar('Painel')">
+          ← Voltar ao painel
+        </button>
+
+      </section>
+
+      <!-- CRONOGRAMA -->
+      <section class="other-section card"
+        *ngIf="secao === 'Cronograma'">
+
+        <h2>▦ Cronograma acadêmico</h2>
+
+        <p>Consulte as datas das atividades acadêmicas.</p>
+
+        <div class="event">
+          <small>05/11/2026 - 19:00</small>
+          <strong>Entrega de trabalho - Fisioterapia</strong>
+        </div>
+
+        <div class="event">
+          <small>06/11/2026 - 14:00</small>
+          <strong>Avaliação - Biologia</strong>
+        </div>
+
+        <div class="event">
+          <small>08/11/2026 - 10:00</small>
+          <strong>Reunião de alinhamento</strong>
+        </div>
+
+        <button class="view" (click)="navegar('Painel')">
+          ← Voltar ao painel
+        </button>
+
+      </section>
+
+      <!-- MENSAGENS -->
+      <section class="other-section card"
+        *ngIf="secao === 'Mensagens'">
+
+        <h2>✉ Mensagens</h2>
+
+        <p>Área de comunicação com os alunos.</p>
+
+        <label for="mensagemProfessor">Escreva uma mensagem:</label>
+
+        <textarea
+          id="mensagemProfessor"
+          [(ngModel)]="mensagem"
+          placeholder="Digite sua mensagem..."
+          rows="4">
+        </textarea>
+
+        <button class="view"
+          [disabled]="!mensagem.trim()"
+          (click)="mensagem = 'Mensagem preparada para envio. Configure o serviço de comunicação para enviá-la.'">
+          Preparar mensagem
+        </button>
+
+        <p *ngIf="mensagem">{{ mensagem }}</p>
+
+        <button class="view" (click)="navegar('Painel')">
+          ← Voltar ao painel
+        </button>
+
+      </section>
+
+      <!-- CONFIGURAÇÕES -->
+      <section class="other-section card"
+        *ngIf="secao === 'Configurações'">
+
+        <h2>⚙ Configurações</h2>
+
+        <p>Gerencie as configurações da sua conta.</p>
+
+        <label>Nome do professor</label>
+
+        <input
+          type="text"
+          [(ngModel)]="professor"
+          placeholder="Nome do professor">
+
+        <button class="view" (click)="salvarConfiguracoes()">
+          Salvar configurações
+        </button>
+
+        <p *ngIf="mensagem">{{ mensagem }}</p>
+
+        <button class="view" (click)="navegar('Painel')">
+          ← Voltar ao painel
+        </button>
+
+      </section>
+
+    </main>
+
+  </div>
+
+</div>
+```

@@ -1,10 +1,20 @@
 import { Routes } from '@angular/router';
+
 import { LoginComponent } from './features/login/login/login';
 import { DashboardComponent } from './features/dashboard/dashboard';
-import {ProfessorComponent}from './features/professor/professor';
+import { ProfessorComponent } from './features/professor/professor';
 import { AlunoComponent } from './features/aluno/aluno';
+import { VisitanteComponent } from './features/visitante/visitante';
 
 export const routes: Routes = [
+  {
+    path: '',
+    component: VisitanteComponent
+  },
+  {
+    path: 'visitante',
+    component: VisitanteComponent
+  },
   {
     path: 'login',
     component: LoginComponent
@@ -22,12 +32,7 @@ export const routes: Routes = [
     component: AlunoComponent
   },
   {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
-  {
     path: '**',
-    redirectTo: 'login'
+    redirectTo: ''
   }
 ];

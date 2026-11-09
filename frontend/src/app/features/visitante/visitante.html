@@ -1,0 +1,467 @@
+
+<header class="topo" id="inicio">
+
+  <div class="marca">
+    <div class="logo">TFC</div>
+
+    <div class="marca-texto">
+      <h2>TFC DIGITAL</h2>
+      <span>TORNANDO O APRENDIZADO DIGITAL</span>
+    </div>
+  </div>
+
+  <nav class="menu">
+    <a href="#inicio" class="ativo">⌂ Início</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#trabalhos">Trabalhos</a>
+    <a href="#duvidas">Dúvidas</a>
+    <a href="#contato">Contato</a>
+  </nav>
+
+  <button class="botao-entrar" (click)="entrar()">
+    👤 Entrar
+  </button>
+
+</header>
+
+<main>
+
+  <!-- APRESENTAÇÃO -->
+
+  <section class="hero">
+
+    <div class="hero-texto">
+
+      <h1>Bem-vindo ao<br>TFC Digital!</h1>
+
+      <h2>
+        Acompanhe o que foi feito no portal,
+        mesmo sem cadastro.
+      </h2>
+
+      <p>
+        Explore as informações disponíveis, visualize
+        suas turmas, atividades, notas autorizadas
+        e trabalhos acadêmicos.
+      </p>
+
+    </div>
+
+    <div class="hero-imagem">
+
+      <div class="ilustracao">
+
+        <div class="notebook">
+
+          <div class="tela">
+            <span class="capelo">🎓</span>
+            <strong>TFC</strong>
+          </div>
+
+          <div class="teclado"></div>
+
+        </div>
+
+        <div class="livros">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- PESQUISA DE TRABALHOS -->
+
+  <section class="pesquisa-area" id="trabalhos">
+
+    <div class="titulo-secao">
+      <span></span>
+      <h2>Encontre trabalhos acadêmicos</h2>
+      <span></span>
+    </div>
+
+    <p class="subtitulo">
+      Pesquise trabalhos publicados no TFC Digital.
+    </p>
+
+    <div class="barra-pesquisa">
+
+      <span class="icone-pesquisa">⌕</span>
+
+      <input
+        type="text"
+        [(ngModel)]="pesquisa"
+        (input)="pesquisar()"
+        placeholder="Pesquise por título, aluno, curso ou tema..."
+        aria-label="Pesquisar trabalhos"
+      >
+
+      <button
+        *ngIf="pesquisa"
+        class="limpar"
+        type="button"
+        (click)="limparPesquisa()">
+        Limpar
+      </button>
+
+      <button
+        class="botao-buscar"
+        type="button"
+        (click)="pesquisar()">
+        Pesquisar
+      </button>
+
+    </div>
+
+    <!-- FILTROS -->
+
+    <div class="filtros">
+
+      <button
+        *ngFor="let categoria of categorias"
+        type="button"
+        [class.filtro-ativo]="categoriaSelecionada === categoria"
+        (click)="selecionarCategoria(categoria)">
+
+        {{ categoria }}
+
+      </button>
+
+    </div>
+
+    <!-- RESULTADOS -->
+
+    <div class="resultado-topo">
+
+      <h3>Trabalhos publicados</h3>
+
+      <span>
+        {{ trabalhosFiltrados.length }} resultado(s)
+      </span>
+
+    </div>
+
+    <div
+      class="trabalhos-grid"
+      *ngIf="trabalhosFiltrados.length > 0">
+
+      <article
+        class="trabalho-card"
+        *ngFor="let trabalho of trabalhosFiltrados">
+
+        <div class="trabalho-icone">📚</div>
+
+        <span class="categoria">
+          {{ trabalho.categoria }}
+        </span>
+
+        <h3>{{ trabalho.titulo }}</h3>
+
+        <p class="autor">
+          <strong>Aluno:</strong> {{ trabalho.aluno }}
+        </p>
+
+        <p class="curso">
+          {{ trabalho.curso }}
+        </p>
+
+        <p class="descricao">
+          {{ trabalho.descricao }}
+        </p>
+
+        <div class="trabalho-rodape">
+
+          <span>📅 {{ trabalho.data }}</span>
+
+          <button
+            type="button"
+            (click)="selecionarTrabalho(trabalho)">
+            Ver trabalho →
+          </button>
+
+        </div>
+
+      </article>
+
+    </div>
+
+    <!-- NENHUM RESULTADO -->
+
+    <div
+      class="sem-resultados"
+      *ngIf="trabalhosFiltrados.length === 0">
+
+      <span>🔎</span>
+
+      <h3>Nenhum trabalho encontrado</h3>
+
+      <p>
+        Tente pesquisar usando outras palavras ou categorias.
+      </p>
+
+      <button
+        type="button"
+        (click)="limparPesquisa()">
+        Limpar pesquisa
+      </button>
+
+    </div>
+
+    <!-- DETALHES DO TRABALHO -->
+
+    <div
+      class="detalhes-trabalho"
+      *ngIf="trabalhoSelecionado">
+
+      <button
+        class="fechar-detalhes"
+        type="button"
+        (click)="fecharDetalhes()">
+        ✕
+      </button>
+
+      <span class="categoria">
+        {{ trabalhoSelecionado.categoria }}
+      </span>
+
+      <h2>{{ trabalhoSelecionado.titulo }}</h2>
+
+      <p>
+        <strong>Aluno:</strong>
+        {{ trabalhoSelecionado.aluno }}
+      </p>
+
+      <p>
+        <strong>Curso:</strong>
+        {{ trabalhoSelecionado.curso }}
+      </p>
+
+      <p>
+        <strong>Data de publicação:</strong>
+        {{ trabalhoSelecionado.data }}
+      </p>
+
+      <p class="descricao-detalhada">
+        {{ trabalhoSelecionado.descricao }}
+      </p>
+
+      <p class="aviso-publico">
+        Este trabalho está disponível para consulta pública.
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- O QUE PODE VISUALIZAR -->
+
+  <section class="visualizacoes" id="sobre">
+
+    <div class="titulo-secao">
+      <span></span>
+      <h2>O que você pode visualizar?</h2>
+      <span></span>
+    </div>
+
+    <div class="cards-visualizacao">
+
+      <article class="card-visualizacao">
+
+        <div class="icone-card">👥</div>
+
+        <h3>Suas Turmas</h3>
+
+        <p>
+          Veja as turmas disponíveis no portal.
+        </p>
+
+        <button
+          type="button"
+          (click)="visualizarTurmas()">
+          Consultar turmas
+        </button>
+
+      </article>
+
+      <article class="card-visualizacao">
+
+        <div class="icone-card">📋</div>
+
+        <h3>Atividades</h3>
+
+        <p>
+          Acompanhe atividades já publicadas.
+        </p>
+
+        <button
+          type="button"
+          (click)="visualizarAtividades()">
+          Consultar atividades
+        </button>
+
+      </article>
+
+      <article class="card-visualizacao">
+
+        <div class="icone-card">⭐</div>
+
+        <h3>Notas</h3>
+
+        <p>
+          Consulte informações de desempenho quando autorizadas.
+        </p>
+
+        <button
+          type="button"
+          (click)="consultarNotas()">
+          Consultar notas
+        </button>
+
+      </article>
+
+      <article class="card-visualizacao">
+
+        <div class="icone-card">📅</div>
+
+        <h3>Calendário</h3>
+
+        <p>
+          Confira eventos e prazos importantes.
+        </p>
+
+        <button
+          type="button"
+          (click)="visualizarCalendario()">
+          Consultar calendário
+        </button>
+
+      </article>
+
+    </div>
+
+  </section>
+
+  <!-- INFORMAÇÕES PÚBLICAS -->
+
+  <section class="informacoes-publicas">
+
+    <h2>Informações disponíveis no portal</h2>
+
+    <div class="informacao-bloco" id="lista-turmas">
+
+      <h3>👥 Turmas disponíveis</h3>
+
+      <p>Arquitetura e Urbanismo</p>
+      <p>Desenvolvimento de Sistemas</p>
+      <p>Administração</p>
+      <p>Pedagogia</p>
+
+    </div>
+
+    <div class="informacao-bloco" id="lista-atividades">
+
+      <h3>📋 Atividades publicadas</h3>
+
+      <p>Entrega da primeira etapa do TCC</p>
+      <p>Pesquisa bibliográfica</p>
+      <p>Desenvolvimento do projeto</p>
+
+    </div>
+
+    <div class="informacao-bloco" id="lista-calendario">
+
+      <h3>📅 Calendário e avisos</h3>
+
+      <p>10/11/2026 — Acompanhamento dos projetos.</p>
+      <p>16/11/2026 — Prazo para entrega da segunda etapa.</p>
+      <p>25/11/2026 — Apresentação dos trabalhos.</p>
+
+    </div>
+
+    <div class="informacao-bloco">
+
+      <h3>⭐ Notas e desempenho</h3>
+
+      <p>
+        As notas individuais são exibidas somente
+        quando houver autorização de acesso.
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- BLOQUEIO DE ENVIO -->
+
+  <section class="aviso-cadastro">
+
+    <div class="cadeado">🔒</div>
+
+    <div>
+
+      <h3>
+        Envio de materiais disponível apenas para usuários cadastrados.
+      </h3>
+
+      <p>
+        Para enviar atividades, anexos ou qualquer material,
+        faça seu cadastro e acesse sua área completa.
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- CADASTRO -->
+
+  <section class="cadastro-area" id="duvidas">
+
+    <button
+      class="botao-cadastro"
+      type="button"
+      (click)="cadastrar()">
+
+      👤 Faça seu cadastro agora →
+
+    </button>
+
+    <p>
+      É rápido, gratuito e permite acesso às funcionalidades do portal.
+    </p>
+
+  </section>
+
+</main>
+
+<!-- RODAPÉ -->
+
+<footer class="rodape" id="contato">
+
+  <div class="marca marca-rodape">
+
+    <div class="logo">TFC</div>
+
+    <div class="marca-texto">
+      <h2>TFC DIGITAL</h2>
+      <span>TORNANDO O APRENDIZADO DIGITAL</span>
+    </div>
+
+  </div>
+
+  <nav>
+    <a href="#sobre">Sobre</a>
+    <a href="#contato">Contato</a>
+    <a href="#duvidas">Ajuda</a>
+  </nav>
+
+  <div class="redes">
+    <span>◎</span>
+    <span>▶</span>
+    <span>◎</span>
+  </div>
+
+</footer>
